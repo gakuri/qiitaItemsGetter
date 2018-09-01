@@ -21,20 +21,27 @@ const util_1 = require("util");
 const per_page = 100;
 const now = new Date();
 const sevenDaysAgo = new Date((new Date()).setDate(now.getDate() - 7));
+const oneDayAgo = new Date((new Date()).setDate(now.getDate() - 1));
+const searchStopDate = oneDayAgo;
 var pageNum = 1;
 getQiitaItems(pageNum, per_page);
 function getQiitaItems(pageNum, per_page) {
     return __awaiter(this, void 0, void 0, function* () {
+        // 1. record executed DateTime
         var nowTime = (new Date()).getTime();
         //console.log(`nowTime: ${nowTime}`)
+        // 2. Call API get Qiita Item in the form of Json.
         var URL = `https://qiita.com/api/v2/items?page=${pageNum}&per_page=${per_page}`;
         console.log(URL);
         let json = yield getJson(URL);
         if (util_1.isUndefined(json)) {
             return;
         }
+        // 3. get the minimum "created_at" Date from Qiita Item Json.
         let minCreatedAt = getMinimumCreatedAt(json);
-        if (minCreatedAt.getTime() > sevenDaysAgo.getTime()) {
+        // 4. repeat if not reach the stop date
+        if (minCreatedAt.getTime() > searchStopDate.getTime()) {
+            // limit 1 request per 3.6 second
             var offset = (nowTime - (new Date()).getTime()) + 3600;
             //console.log(`offset : ${offset}`)
             setTimeout(() => {
