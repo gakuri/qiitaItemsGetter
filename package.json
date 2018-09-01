@@ -8,8 +8,11 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "mongoose": "^5.2.12"
+  },
   "devDependencies": {
+    "@types/mongoose": "^5.2.9",
     "@types/node": "^10.9.4"
   }
 }
