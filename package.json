@@ -12,6 +12,7 @@
     "mongoose": "^5.2.12"
   },
   "devDependencies": {
+    "@types/mongodb": "^3.1.4",
     "@types/mongoose": "^5.2.9",
     "@types/node": "^10.9.4"
   }
